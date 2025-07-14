@@ -10,6 +10,15 @@ import IconsResolver from "unplugin-icons/resolver";
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8082",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
   plugins: [
     vue(),
     vueDevTools(),
@@ -73,7 +82,7 @@ export default defineConfig({
   },
   // 优化配置
   optimizeDeps: {
-    include: ["vue", "vue-router", "pinia", "@vueuse/core"],
+    include: ["vue", "vue-router", "pinia", "@vueuse/core,"],
   },
   // CSS配置
   css: {
